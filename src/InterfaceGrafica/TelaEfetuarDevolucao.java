@@ -110,6 +110,7 @@ public class TelaEfetuarDevolucao extends ModeloEmprestimos {
         jLabel2 = new javax.swing.JLabel();
         tNome = new javax.swing.JTextField();
         tTelefone = new javax.swing.JTextField();
+        bBuscarExemplar1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaEmprestimosAssociado = new javax.swing.JTable();
         labelEmprestimos = new javax.swing.JLabel();
@@ -140,9 +141,6 @@ public class TelaEfetuarDevolucao extends ModeloEmprestimos {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 tCPFFocusGained(evt);
             }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                tCPFFocusLost(evt);
-            }
         });
 
         labelCpf.setText("* CPF:");
@@ -156,6 +154,15 @@ public class TelaEfetuarDevolucao extends ModeloEmprestimos {
 
         tTelefone.setToolTipText("Telefone do associado");
         tTelefone.setEnabled(false);
+
+        bBuscarExemplar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/selecionado.png"))); // NOI18N
+        bBuscarExemplar1.setText("Continuar");
+        bBuscarExemplar1.setToolTipText("Buscar um exemplar do acervo");
+        bBuscarExemplar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bBuscarExemplar1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -175,16 +182,19 @@ public class TelaEfetuarDevolucao extends ModeloEmprestimos {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(labelCpf)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(tCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(tCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(bBuscarExemplar1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(316, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(0, 0, 0)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelCpf)
-                    .addComponent(tCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bBuscarExemplar1)
+                    .addComponent(labelCpf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
@@ -311,8 +321,12 @@ public class TelaEfetuarDevolucao extends ModeloEmprestimos {
         tCPF.setForeground(Color.black);
     }//GEN-LAST:event_tCPFFocusGained
 
-    private void tCPFFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tCPFFocusLost
-        DefaultTableModel modelo = (DefaultTableModel) tabelaEmprestimosAssociado.getModel();
+    private void tabelaEmprestimosAssociadoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tabelaEmprestimosAssociadoFocusGained
+        labelEmprestimos.setForeground(Color.black);
+    }//GEN-LAST:event_tabelaEmprestimosAssociadoFocusGained
+
+    private void bBuscarExemplar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBuscarExemplar1ActionPerformed
+                DefaultTableModel modelo = (DefaultTableModel) tabelaEmprestimosAssociado.getModel();
         try {
             lerArquivoAssociados();
         } catch (Exception ex) {
@@ -355,11 +369,7 @@ public class TelaEfetuarDevolucao extends ModeloEmprestimos {
                 modelo.addRow(llx);
             }
         }
-    }//GEN-LAST:event_tCPFFocusLost
-
-    private void tabelaEmprestimosAssociadoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tabelaEmprestimosAssociadoFocusGained
-        labelEmprestimos.setForeground(Color.black);
-    }//GEN-LAST:event_tabelaEmprestimosAssociadoFocusGained
+    }//GEN-LAST:event_bBuscarExemplar1ActionPerformed
 
     private void lerArquivo() throws Exception {
         ObjectInputStream arquivo = null;
@@ -478,24 +488,19 @@ public class TelaEfetuarDevolucao extends ModeloEmprestimos {
     }
 
     public double calculaMulta(DataX dataDevolucao) {
-        // Data inicial
         Calendar dataInicio = Calendar.getInstance();
-        // Atribui a data de 10/FEV/2008
         dataInicio.set((int) dataDevolucao.getAno(), (int) dataDevolucao.getMes() - 1, (int) dataDevolucao.getDia());
-        // Data de hoje
         Calendar dataFinal = Calendar.getInstance();
-//      dataFinal.set(2018,10,1);  
-        // Calcula a diferença entre hoje e da data de inicio
+        //dataFinal.set(2020,12,21);  
         long diferenca = dataFinal.getTimeInMillis()
                 - dataInicio.getTimeInMillis();
-        // Quantidade de milissegundos em um dia
         int tempoDia = 1000 * 60 * 60 * 24;
         long diasDiferenca = diferenca / tempoDia;
-        if (diasDiferenca > 0) { //Passou do prazo de 10 dias
+        if (diasDiferenca > 0) {
             BigDecimal bd = new BigDecimal(diasDiferenca * (0.15)).setScale(2, RoundingMode.HALF_EVEN);
             JOptionPane.showMessageDialog(null, "Houve atraso na devolução. Será vinculado ao associado"
                     + "uma multa de R$0,15 ao dia de atraso. Total: R$" + bd.doubleValue() + "");
-            return bd.doubleValue(); //R$0,15 por dia de atraso
+            return bd.doubleValue();
         }
         return 0;
     }
@@ -608,6 +613,7 @@ public class TelaEfetuarDevolucao extends ModeloEmprestimos {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bBuscarExemplar1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

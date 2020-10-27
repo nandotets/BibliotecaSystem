@@ -102,6 +102,7 @@ public class TelaEfetuarEmprestimo extends ModeloEmprestimos {
         tabelaEmprestimosAssociado = new javax.swing.JTable();
         tNome = new javax.swing.JTextField();
         tTelefone = new javax.swing.JTextField();
+        bBuscarExemplar1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         labelDia = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -137,9 +138,6 @@ public class TelaEfetuarEmprestimo extends ModeloEmprestimos {
         tCPF.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 tCPFFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                tCPFFocusLost(evt);
             }
         });
 
@@ -189,6 +187,15 @@ public class TelaEfetuarEmprestimo extends ModeloEmprestimos {
         tTelefone.setToolTipText("Telefone do associado");
         tTelefone.setEnabled(false);
 
+        bBuscarExemplar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/selecionado.png"))); // NOI18N
+        bBuscarExemplar1.setText("Continuar");
+        bBuscarExemplar1.setToolTipText("Buscar um exemplar do acervo");
+        bBuscarExemplar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bBuscarExemplar1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -203,18 +210,20 @@ public class TelaEfetuarEmprestimo extends ModeloEmprestimos {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(labelCpf)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(tCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(tCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(bBuscarExemplar1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tNome, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 138, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addGap(72, 72, 72))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())))
         );
         jPanel2Layout.setVerticalGroup(
@@ -226,11 +235,14 @@ public class TelaEfetuarEmprestimo extends ModeloEmprestimos {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(0, 7, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelCpf)
-                    .addComponent(tCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(bBuscarExemplar1))
+                    .addComponent(tCPF)
+                    .addComponent(labelCpf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(tNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -360,7 +372,7 @@ public class TelaEfetuarEmprestimo extends ModeloEmprestimos {
                         .addComponent(jLabel10)
                         .addComponent(labelAno1))
                     .addComponent(jLabel9))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -372,7 +384,23 @@ public class TelaEfetuarEmprestimo extends ModeloEmprestimos {
         labelCpf.setForeground(Color.black);
     }//GEN-LAST:event_tCPFFocusGained
 
-    private void tCPFFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tCPFFocusLost
+    private void bBuscarExemplarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBuscarExemplarActionPerformed
+        labelExemplar.setForeground(Color.black);
+        try {
+            TelaBuscarExemplar telaBusca = new TelaBuscarExemplar();
+            telaBusca.setVisible(true);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Erro ao abrir tela de buscar exemplar.\n" + ex.getMessage(),
+                    "Tela de erro", JOptionPane.ERROR_MESSAGE);
+        }
+        if (TelaEfetuarEmprestimo.identif == 1) {
+            tExemplar.setText(livro.getTitulo());
+        } else if (TelaEfetuarEmprestimo.identif == 2) {
+            tExemplar.setText(revista.getTitulo());
+        }
+    }//GEN-LAST:event_bBuscarExemplarActionPerformed
+
+    private void bBuscarExemplar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBuscarExemplar1ActionPerformed
         int contador = 0;
         DefaultTableModel modelo = (DefaultTableModel) tabelaEmprestimosAssociado.getModel();
         try {
@@ -450,23 +478,7 @@ public class TelaEfetuarEmprestimo extends ModeloEmprestimos {
                 return;
             }
         }
-    }//GEN-LAST:event_tCPFFocusLost
-
-    private void bBuscarExemplarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBuscarExemplarActionPerformed
-        labelExemplar.setForeground(Color.black);
-        try {
-            TelaBuscarExemplar telaBusca = new TelaBuscarExemplar();
-            telaBusca.setVisible(true);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Erro ao abrir tela de buscar exemplar.\n" + ex.getMessage(),
-                    "Tela de erro", JOptionPane.ERROR_MESSAGE);
-        }
-        if (TelaEfetuarEmprestimo.identif == 1) {
-            tExemplar.setText(livro.getTitulo());
-        } else if (TelaEfetuarEmprestimo.identif == 2) {
-            tExemplar.setText(revista.getTitulo());
-        }
-    }//GEN-LAST:event_bBuscarExemplarActionPerformed
+    }//GEN-LAST:event_bBuscarExemplar1ActionPerformed
 
     private void lerArquivo() throws Exception {
         ObjectInputStream arquivo = null;
@@ -607,6 +619,7 @@ public class TelaEfetuarEmprestimo extends ModeloEmprestimos {
                     } catch (Exception ex) {
                     }
                 }
+                return;
             }
         } else if (identif == 2 && revista.getQtdeExemplar() - qntdEmprestadosRev < 2) {
             for (int x = 0; x < emprestimos.size(); x++) {
@@ -798,6 +811,7 @@ public class TelaEfetuarEmprestimo extends ModeloEmprestimos {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bBuscarExemplar;
+    private javax.swing.JButton bBuscarExemplar1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

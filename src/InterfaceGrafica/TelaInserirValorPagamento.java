@@ -8,6 +8,7 @@ package InterfaceGrafica;
 import static InterfaceGrafica.TelaPagarMultas.valorPagoMulta;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.DecimalFormat;
 
 /**
  *
@@ -35,10 +36,11 @@ public class TelaInserirValorPagamento extends javax.swing.JDialog {
         setTitle("Inserir valor R$");
 
         try {
-            tValorInput.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("R$#,##")));
+            tValorInput.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("R$#.##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        tValorInput.setText("R$ .  ");
 
         jLabel1.setText("Insira o valor que deseja pagar para subtrair da multa pendente:");
 
@@ -49,7 +51,7 @@ public class TelaInserirValorPagamento extends javax.swing.JDialog {
             }
         });
 
-        jLabel2.setText("Valor máximo R$ 9,99");
+        jLabel2.setText("Valor máximo R$ 9.99");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -93,13 +95,11 @@ public class TelaInserirValorPagamento extends javax.swing.JDialog {
         String edit = tValorInput.getText();
         edit = edit.replace("R$", "");
         edit = edit.replace(",", ".");
-        if(edit.equals(" .  ")){
+        if (edit.equals(" .  ")) {
             edit = "0.00";
         }
-        System.out.println(edit);
         TelaPagarMultas.valorPagoMulta = Double.parseDouble(edit);
-        BigDecimal bd = new BigDecimal(valorPagoMulta).setScale(2, RoundingMode.HALF_EVEN);
-        TelaPagarMultas.tValorSerPago.setText(Double.toString(bd.doubleValue()));
+        TelaPagarMultas.tValorSerPago.setText(edit);
         this.dispose();
     }//GEN-LAST:event_bOkActionPerformed
 

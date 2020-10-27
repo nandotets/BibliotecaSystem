@@ -15,8 +15,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import static java.lang.Math.round;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -32,7 +34,6 @@ public class TelaPagarMultas extends ModeloEmprestimos {
     Associado associado = new Associado();
     public static double valorPagoMulta;
     int verificador = -1;
-    BigDecimal bd;
 
     public TelaPagarMultas() throws Exception {
         try {
@@ -76,6 +77,7 @@ public class TelaPagarMultas extends ModeloEmprestimos {
         jLabel4 = new javax.swing.JLabel();
         tValorSerPago = new javax.swing.JLabel();
         bInserirValorPago = new javax.swing.JButton();
+        bBuscarExemplar1 = new javax.swing.JButton();
 
         setTitle("Pagamento de multa");
         setToolTipText("");
@@ -95,9 +97,6 @@ public class TelaPagarMultas extends ModeloEmprestimos {
         tCPF.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 tCPFFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                tCPFFocusLost(evt);
             }
         });
 
@@ -119,17 +118,26 @@ public class TelaPagarMultas extends ModeloEmprestimos {
         labelDia.setText("R$");
         labelDia.setToolTipText("Data do empréstimo");
 
-        tValorMultaPendente.setText("0.0");
+        tValorMultaPendente.setText("0.00");
 
         jLabel4.setText("Valor a ser pago: R$");
 
-        tValorSerPago.setText("0.0");
+        tValorSerPago.setText("0.00");
 
         bInserirValorPago.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Cash_B-512.png"))); // NOI18N
         bInserirValorPago.setText("Inserir valor a ser pago");
         bInserirValorPago.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bInserirValorPagoActionPerformed(evt);
+            }
+        });
+
+        bBuscarExemplar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/selecionado.png"))); // NOI18N
+        bBuscarExemplar1.setText("Continuar");
+        bBuscarExemplar1.setToolTipText("Buscar um exemplar do acervo");
+        bBuscarExemplar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bBuscarExemplar1ActionPerformed(evt);
             }
         });
 
@@ -159,22 +167,28 @@ public class TelaPagarMultas extends ModeloEmprestimos {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(tTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tNome, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(labelCPF)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(tCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(labelCPF, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(tCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(bBuscarExemplar1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addGap(9, 9, 9)
+                                .addComponent(tNome, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelCPF)
-                    .addComponent(tCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(labelCPF, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tCPF)
+                    .addComponent(bBuscarExemplar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
@@ -200,6 +214,10 @@ public class TelaPagarMultas extends ModeloEmprestimos {
                         .addComponent(bInserirValorPago)))
                 .addGap(33, 33, 33))
         );
+
+        tValorMultaPendente.getAccessibleContext().setAccessibleName("");
+        tValorMultaPendente.getAccessibleContext().setAccessibleDescription("");
+        tValorSerPago.getAccessibleContext().setAccessibleName("");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -227,7 +245,13 @@ public class TelaPagarMultas extends ModeloEmprestimos {
         labelCPF.setForeground(Color.BLACK);
     }//GEN-LAST:event_tCPFFocusGained
 
-    private void tCPFFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tCPFFocusLost
+    private void bInserirValorPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bInserirValorPagoActionPerformed
+        bInserirValorPago.setForeground(Color.black);
+        TelaInserirValorPagamento telaInsert = new TelaInserirValorPagamento();
+        telaInsert.setVisible(true);
+    }//GEN-LAST:event_bInserirValorPagoActionPerformed
+
+    private void bBuscarExemplar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBuscarExemplar1ActionPerformed
         try {
             lerArquivoAssociados();
         } catch (Exception ex) {
@@ -257,11 +281,16 @@ public class TelaPagarMultas extends ModeloEmprestimos {
         }
         for (int i = 0; i < multas.size(); i++) {
             if (multas.get(i).getAssociado().getCpfAssociado().equals(associado.getCpfAssociado())) {
-                tValorMultaPendente.setText(Double.toString(multas.get(i).getValorMulta()));
+                DecimalFormat df = new DecimalFormat("0.00");
+                tValorMultaPendente.setText(df.format(multas.get(i).getValorMulta()).replace(",", "."));
+                if (df.format(multas.get(i).getValorMulta()).replace(",", ".").equals("0.00")) {
+                    JOptionPane.showMessageDialog(null, "Não foi encontrado multas "
+                            + "pendentes relacionadas ao associado com CPF " + tCPF.getText() + ".\nDigite outro CPF.");
+                    LimpaCampos();
+                    return;
+                }
                 verificador = 0;
                 break;
-            } else {
-                verificador = 1;
             }
         }
         if (verificador == -1) {
@@ -272,13 +301,7 @@ public class TelaPagarMultas extends ModeloEmprestimos {
                     + "pendentes relacionadas ao associado com CPF " + tCPF.getText() + ".\nDigite outro CPF.");
             labelCPF.setForeground(Color.red);
         }
-    }//GEN-LAST:event_tCPFFocusLost
-
-    private void bInserirValorPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bInserirValorPagoActionPerformed
-        bInserirValorPago.setForeground(Color.black);
-        TelaInserirValorPagamento telaInsert = new TelaInserirValorPagamento();
-        telaInsert.setVisible(true);
-    }//GEN-LAST:event_bInserirValorPagoActionPerformed
+    }//GEN-LAST:event_bBuscarExemplar1ActionPerformed
 
     private void lerArquivoAssociados() throws Exception {
         ObjectInputStream arquivo = null;
@@ -313,19 +336,13 @@ public class TelaPagarMultas extends ModeloEmprestimos {
     @Override
     public void bSalvarActionListener(ActionEvent evt) {
         int result;
-        if (tValorSerPago.getText().equals("0.0")) {
+        if (tValorSerPago.getText().equals("0.00")) {
             JOptionPane.showMessageDialog(null, "Insira um valor a ser pago!", "NENHUM VALOR INSERIDO", JOptionPane.ERROR_MESSAGE);
             bInserirValorPago.setForeground(Color.RED);
             return;
         }
         if (verificador == -1) {
             JOptionPane.showMessageDialog(null, "Digite o CPF de um associado!", "NENHUM ASSOCIADO INSERIDO", JOptionPane.ERROR_MESSAGE);
-            labelCPF.setForeground(Color.red);
-            return;
-        }
-        if (verificador == 1) {
-            JOptionPane.showMessageDialog(null, "Não foi encontrado multas "
-                    + "pendentes relacionadas ao associado com CPF " + tCPF.getText() + ".\nDigite outro CPF.");
             labelCPF.setForeground(Color.red);
             return;
         }
@@ -337,14 +354,14 @@ public class TelaPagarMultas extends ModeloEmprestimos {
             lerArquivoMultas();
         } catch (Exception ex) {
         }
-        bd = new BigDecimal(valorPagoMulta).setScale(2, RoundingMode.HALF_EVEN);
-        result = JOptionPane.showConfirmDialog(null, "Efetuar um pagamento de valor: R$'"
-                + bd.doubleValue() + " que será descontado da multa do associado '" + associado.getNome() + " ?");
+        result = JOptionPane.showConfirmDialog(null, "Efetuar um pagamento de valor: R$"
+                + valorPagoMulta + " que será descontado da multa do associado '" + associado.getNome() + "' ?");
         if (result == 0) { //Resposta SIM
             int idt = 0;
             for (int i = 0; i < multas.size(); i++) { //PERCORRE TODAS AS MULTAS
                 if (multas.get(i).getAssociado().getCpfAssociado().equals(associado.getCpfAssociado())) {
-                    double resto = multas.get(i).getValorMulta() - valorPagoMulta;
+                    DecimalFormat df = new DecimalFormat("0.00");
+                    double resto = Double.parseDouble(df.format(multas.get(i).getValorMulta() - valorPagoMulta).replace(",", "."));
                     if (resto < 0) {
                         JOptionPane.showMessageDialog(null, "O valor inserido é maior que o valor da multa pendente."
                                 + " Não se pode ficar com créditos na conta!", "VALOR PAGO MAIOR QUE DA MULTA",
@@ -413,11 +430,12 @@ public class TelaPagarMultas extends ModeloEmprestimos {
         tCPF.setText("");
         tNome.setText("");
         tTelefone.setText("");
-        tValorMultaPendente.setText("0.0");
-        tValorSerPago.setText("0.0");
+        tValorMultaPendente.setText("0.00");
+        tValorSerPago.setText("0.00");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bBuscarExemplar1;
     private javax.swing.JButton bInserirValorPago;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

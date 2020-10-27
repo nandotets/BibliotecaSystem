@@ -55,7 +55,7 @@ public class TelaInicial extends javax.swing.JFrame {
         menuSobre = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("BIBLIOTECA v1.3");
+        setTitle("BIBLIOTECA v1.4");
         setIconImages(null);
         setMaximumSize(new java.awt.Dimension(900, 600));
         setPreferredSize(new java.awt.Dimension(900, 600));
@@ -66,8 +66,6 @@ public class TelaInicial extends javax.swing.JFrame {
         Desktop.setPreferredSize(new java.awt.Dimension(900, 600));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/wallpaperStart.jpg"))); // NOI18N
-
-        Desktop.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout DesktopLayout = new javax.swing.GroupLayout(Desktop);
         Desktop.setLayout(DesktopLayout);
@@ -83,6 +81,7 @@ public class TelaInicial extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(0, 31, Short.MAX_VALUE))
         );
+        Desktop.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jMenu1.setText("Empréstimo");
 
